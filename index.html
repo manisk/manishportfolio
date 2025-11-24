@@ -26,7 +26,8 @@
     </header>
 
     <section id="hero">
-      <h1>I'm Manish Kumar.</h1>
+      <!-- <h1>I'm Manish Kumar.</h1> -->
+      <h1>I'm Manish Kumar — <span id="typed" class="typed"></span></h1>
       <img src="./img/manish.jpeg" alt="Profile Picture" />
       <p>UI Developer</p>
     </section>
@@ -140,6 +141,55 @@
           });
         });
       });
+
+      // Multiple phrases list
+      const textArray = [
+        "UI Developer",
+        "Frontend Engineer",
+        "React Developer",
+        "JavaScript Enthusiast",
+      ];
+
+      let phraseIndex = 0;
+      let letterIndex = 0;
+      let currentText = "";
+      let isDeleting = false;
+
+      const typingSpeed = 120;
+      const deletingSpeed = 60;
+      const pauseTime = 1200;
+
+      function typeEffect() {
+        currentText = textArray[phraseIndex];
+
+        if (!isDeleting) {
+          // Typing
+          document.getElementById("typed").textContent = currentText.slice(
+            0,
+            ++letterIndex
+          );
+          if (letterIndex === currentText.length) {
+            isDeleting = true;
+            setTimeout(typeEffect, pauseTime);
+            return;
+          }
+        } else {
+          // Deleting
+          document.getElementById("typed").textContent = currentText.slice(
+            0,
+            --letterIndex
+          );
+          if (letterIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % textArray.length;
+          }
+        }
+
+        setTimeout(typeEffect, isDeleting ? deletingSpeed : typingSpeed);
+      }
+
+      // Start
+      typeEffect();
     </script>
   </body>
 </html>
